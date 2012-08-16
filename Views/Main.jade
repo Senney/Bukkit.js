@@ -1,0 +1,23 @@
+html
+	head
+		title= "Senney.Net Minecraft"
+		link(rel="stylesheet", href="MainStyles.css")
+		script(type="text/javascript")
+			// Scroll the textarea to the bottom.
+			window.onload=function() {
+				document.getElementsByName('log')[0].scrollTop=document.getElementsByName('log')[0].scrollHeight;
+			};
+	body
+		.pageContainer
+			.wrapper
+				strong
+					p Server Log Contents
+				textarea#logArea(readonly=true, name="log")
+					= logContents
+				div#loginBox
+					form(action="/Login/", method="post")
+						= "Username"
+						input.box(type="text", name="uname")
+						= "Password"
+						input.box(type="password", name="pword")
+						input(type="submit", name="sub", value="Login")

@@ -1,0 +1,53 @@
+body {
+	padding: 0px;
+	margin: 0px;
+}
+
+textarea#logArea {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	
+	width: 97%;
+	height: 40%;
+	
+	border: 1px solid;
+}
+
+div.pageContainer {
+    position:absolute;
+    height:100%;
+    width:100%;
+    top:0;
+    left:0;
+    overflow:hidden;
+}
+
+div.wrapper {
+	background: #E3E3E3;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-top: 8px;
+
+	position: relative;
+	margin: 0px auto;
+	height: 100%;
+	width: 90%;
+}
+
+div#loginBox {
+	margin: 0px auto;
+	margin-top: 30px;
+	
+	background: #C9E3FF;
+	padding: 15px;
+	text-align: center;
+	width: 200px;
+	
+	border: 1px solid #0571FF;
+}
+
+input.box {
+	margin: 4px;
+	padding: 3px;
+}
