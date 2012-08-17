@@ -2,14 +2,17 @@
 
 ## Prerequisites ##
 Most up-to-date release of Node.
+
 Node Libraries:
 *	Express.js
 *	Jade
 
 ## Running ##
-Check the settings for your server in *Config.js*. Ensure that everything is set properly for your configuration.
+Check the settings for your server in *Config.js*. Ensure that everything is set properly for your configuration. 
+Specifically you will want to check the IP and Port settings.
 
 To start the server, run
+
 	node Server.js
 
 This will start the Minecraft server and the webserver.
