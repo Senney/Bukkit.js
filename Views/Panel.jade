@@ -11,10 +11,11 @@ html
 		.pageContainer
 			.wrapper
 				include Log
-				div#loginBox
-					form(action="/Login/", method="post")
-						= "Username"
-						input.box(type="text", name="uname")
-						= "Password"
-						input.box(type="password", name="pword")
-						input(type="submit", name="sub", value="Login")
+				="Broadcast a Message"
+				form(action = "/Panel/Message", method="post")
+					input#message(name = "message")
+					input(type="submit")
+				="Send a Command"
+				form(action = "/Panel/Command", method="post")
+					input#command(name = "command")
+					input(type="submit")

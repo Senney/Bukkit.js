@@ -79,14 +79,4 @@ this.Bukkit._endProcess = function() {
 	}
 }
 
-this.Bukkit.BackupServer = function() {
-	util.Debug("Running server backup.");
-
-	var shell_args = ["BackupServer.sh"];
-	
-	var backupHandle = spawn("sh", shell_args);
-	this.backupHandle.stdout.on("data", function(data) {
-	});
-}
-
 module.exports = this.Bukkit;

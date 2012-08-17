@@ -4,10 +4,16 @@ var	http = require("http"),
 	bukkit = require("./Bukkit.js"),
 	util = require("./Util.js"),
 	Config = require("./Config.js"),
-	Express = require("express");
+	Express = require("express"), 
+	hash = require("./Accounts/Hash.js"),
+	fs = require("fs"),
+	AccountManager = require("./Accounts/AccountManager.js");
 	
 // Create the Express webapp.
 var app = Express();
+
+// Create an AccountManager
+var Acct = new AccountManager(Config.System.AccountDir, Config.System.GlobalSalt);
 
 // Configure Express.
 app.configure(function() {
@@ -22,22 +28,72 @@ app.configure(function() {
 	app.use(Express.methodOverride());
 	
 	app.engine("jade", require("jade").__express);
+	
+	hash.setGlobalSalt(Config.System.GlobalSalt);
 });
 
 bukkit.CreateServer();
 
 // The root page.
 app.get('/', function(req, res) {
+	if (req.session.user) {
+		res.redirect("/Panel");
+	}
+
 	util.Debug("Request from " + req.connection.remoteAddress + " for /.");
 	res.render('Main.jade', { logContents: bukkit.GetLog() });
 });
 
 app.post('/Login', function(req, res) {
+	var username = req.body.uname;
+	var password = req.body.pword;
 	
+	if (!username || !password)
+		res.redirect(301, "/");
+	
+	if (Acct.Login(username, password)) {
+		req.session.user = username;
+	
+		util.Debug(username + " was logged in successfully.");
+		res.redirect(301, "/Panel");
+		return;
+	}
+	
+	util.Debug(username + " was invalid.");
+	res.redirect(301, "/");
 });
 
-util.Debug("Server listening on port 8080.");
-app.listen(8080);
+app.get('/Panel', function(req, res) {	
+	if (!req.session.user)
+		res.redirect("/");
+		
+	res.render('Panel.jade', {
+		logContents: bukkit.GetLog()
+	});
+});
+
+app.post('/Panel/:Type', function(req, res) {
+	if (!req.session.user)
+		res.redirect("/");
+	
+	util.Debug("Panel request: " + req.params.Type);
+	switch(req.params.Type) {
+		case "Message":
+			var msg = req.body.message;
+			if (msg.length < Config.Bukkit.MaxChatMessage)
+				bukkit.Broadcast(msg);
+			break;
+		case "Command":
+			var cmd = req.body.command;
+			bukkit.SendCommand(cmd);
+			break;
+	}
+	
+	res.redirect("/Panel");
+});
+
+util.Debug("Server listening on port " + Config.Network.WebPort);
+app.listen(Config.Network.WebPort);
 
 process.on('exit', function() { bukkit.StopServer(); });
 process.on('SIGINT', function() { 
