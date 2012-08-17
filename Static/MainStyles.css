@@ -1,6 +1,7 @@
 body {
 	padding: 0px;
 	margin: 0px;
+	font-family: 'Ubuntu', sans-serif;
 }
 
 textarea#logArea {
@@ -10,11 +11,17 @@ textarea#logArea {
 	
 	width: 97%;
 	height: 40%;
+	resize: none;
+	
+	padding: 4px;
 	
 	border: 1px solid;
+	border-radius: 15px;
 }
 
 div.pageContainer {
+	background: black;
+
     position:absolute;
     height:100%;
     width:100%;
@@ -35,19 +42,75 @@ div.wrapper {
 	width: 90%;
 }
 
-div#loginBox {
+div#headerBox {
 	margin: 0px auto;
-	margin-top: 30px;
+	margin-top: 8px;
 	
-	background: #C9E3FF;
-	padding: 15px;
-	text-align: center;
-	width: 200px;
+	background: #F2F2F2;
+	width: 90%;
+	height: 60px;
 	
-	border: 1px solid #0571FF;
+	border: 3px solid #D3D3D3;	
+	border-radius: 15px;
 }
 
-input.box {
+div#container {
+	margin: 0 auto;
+	height: 200px;
+	
+	position: relative;
+	text-align: center;
+}
+
+div#headerBox #headerText {
+	margin-top: 10px;
+
+	font-size: 32px;
+	color: #636363;
+	
+	text-align: center;
+	text-shadow: 4px 4px 4px #aaa;
+}
+
+div#box, div#loginBox, div#statsBox {
+	display: inline-block;
+
+	margin: 0px auto;	
+	background: #C9E3FF;
+	border: 1px solid #0571FF;
+	padding: 15px;
+	text-align: left;
+}
+
+div#statsBox {
+	margin-left: 20px;
+}
+
+div#statsBox p {
+	font-size: 10px;
+	padding: 0;
+	margin: 0;
+}
+
+div#loginBox {
+	text-align: center;	
+}
+
+table#commandTable {
+	margin: 0 auto;
+}
+
+input.iBox {
 	margin: 4px;
 	padding: 3px;
+}
+
+div#container input.sub {
+	border: 1px solid;
+	margin-left: 10px;
+	width: 80px;
+}
+
+div#loginBox p {
+	margin: 0;
 }

@@ -11,11 +11,6 @@ html
 		.pageContainer
 			.wrapper
 				include Log
-				="Broadcast a Message"
-				form(action = "/Panel/Message", method="post")
-					input#message(name = "message")
-					input(type="submit")
-				="Send a Command"
-				form(action = "/Panel/Command", method="post")
-					input#command(name = "command")
-					input(type="submit")
+				#container	
+					include AdminPanel
+					include Stats

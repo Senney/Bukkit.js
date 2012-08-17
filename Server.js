@@ -7,7 +7,8 @@ var	http = require("http"),
 	Express = require("express"), 
 	hash = require("./Accounts/Hash.js"),
 	fs = require("fs"),
-	AccountManager = require("./Accounts/AccountManager.js");
+	AccountManager = require("./Accounts/AccountManager.js"),
+	os = require("os");
 	
 // Create the Express webapp.
 var app = Express();
@@ -41,7 +42,7 @@ app.get('/', function(req, res) {
 	}
 
 	util.Debug("Request from " + req.connection.remoteAddress + " for /.");
-	res.render('Main.jade', { logContents: bukkit.GetLog() });
+	res.render('Main.jade', { logContents: bukkit.GetLog(), stats: getServerInfo() });
 });
 
 app.post('/Login', function(req, res) {
@@ -68,7 +69,8 @@ app.get('/Panel', function(req, res) {
 		res.redirect("/");
 		
 	res.render('Panel.jade', {
-		logContents: bukkit.GetLog()
+		logContents: bukkit.GetLog(),
+		stats: getServerInfo()
 	});
 });
 
@@ -91,6 +93,19 @@ app.post('/Panel/:Type', function(req, res) {
 	
 	res.redirect("/Panel");
 });
+
+app.get('/Log', function(req, res) {
+	res.send(bukkit.GetLog());
+});
+
+function getServerInfo() {
+	return { 	CPUUse: os.loadavg(),
+				MemFree: os.freemem(),
+				MemTotal: os.totalmem(),
+				Uptime: os.uptime(),
+				Type: os.platform() + " " + os.release() + " " + os.arch()
+			};
+}
 
 util.Debug("Server listening on port " + Config.Network.WebPort);
 app.listen(Config.Network.WebPort);

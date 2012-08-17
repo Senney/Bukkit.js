@@ -1,0 +1,13 @@
+table#commandTable
+	tr
+		td
+			="Broadcast a Message"
+			form(action = "/Panel/Message", method="post")
+				input#message(name = "message")
+				input.sub(type="submit", value="Send")
+	tr
+		td
+			="Send a Command"
+			form(action = "/Panel/Command", method="post")
+				input#command(name = "command")
+				input.sub(type="submit", value="Execute")

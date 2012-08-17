@@ -65,7 +65,11 @@ this.Bukkit.Broadcast = function(message) {
 this.Bukkit.SendCommand = function(command) {
 	if (this._bukkitHandle) {
 		util.Debug("Command issued: [" + command + "]");
-		this._bukkitHandle.stdin.write(command + "\r");
+		try {
+			this._bukkitHandle.stdin.write(command + "\r");
+		} catch (err) {
+			util.Debug("Socket might be closed. Cannot send messages! Error: " + err.message);
+		}
 	} else {
 		util.Debug("ERROR: Server is not online. Cannot send command: [" + command + "]");
 	}

@@ -1,0 +1,27 @@
+#statsBox
+	="Server Stats"
+	p CPU Usage
+	- for (var i = 0; i < stats.CPUUse.length; i++)
+		span 
+			p
+				strong #{i}:	
+				- var val = parseInt(stats.CPUUse[i]*100)
+				span #{val}%
+	p Memory Usage							
+		p
+			strong Usage: 
+			- var free = Math.floor(stats.MemFree / 1048576)
+			- var total = Math.floor(stats.MemTotal / 1048576)
+			span #{total-free}M / #{total}M
+		p
+			strong %Free: 
+			span #{Math.floor((stats.MemFree / stats.MemTotal) * 100)}%
+	p Server Information
+		p
+			strong Uptime: 
+			- var uptime = Math.floor(stats.Uptime / 3600);
+			span #{uptime}
+		p
+			strong Distro: 
+			-var distro = stats.Type;
+			span #{distro}
