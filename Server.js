@@ -34,6 +34,9 @@ app.configure(function() {
 });
 
 bukkit.CreateServer();
+bukkit.on("srv:user-connect", function (data) {
+	bukkit.Broadcast(data.name + " has connected to the server! Welcome, " + data.name + "!");
+});
 
 // The root page.
 app.get('/', function(req, res) {
@@ -88,6 +91,9 @@ app.post('/Panel/:Type', function(req, res) {
 		case "Command":
 			var cmd = req.body.command;
 			bukkit.SendCommand(cmd);
+			break;
+		case "Give":
+		
 			break;
 	}
 	
