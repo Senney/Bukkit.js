@@ -1,4 +1,4 @@
 strong
 	p Server Log Contents
-textarea#logArea(readonly=true, name="log")
+textarea#logArea(readonly=true, name="log", onmouseover="StopUpdate()", onmouseleave="StartUpdate()")
 	= logContents

@@ -97,7 +97,7 @@ app.post('/Panel/:Type', function(req, res) {
 			break;
 	}
 	
-	res.redirect("/Panel");
+	setTimeout(function() { res.redirect("/Panel"); }, 500);
 });
 
 app.get('/Log', function(req, res) {
