@@ -6,6 +6,7 @@ Most up-to-date release of Node.
 Node Libraries:
 *	Express.js
 *	Jade
+*	Validator
 
 ## Running ##
 Check the settings for your server in *Config.js*. Ensure that everything is set properly for your configuration. 

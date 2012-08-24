@@ -14,7 +14,7 @@ var	http = require("http"),
 var app = Express();
 
 // Create an AccountManager
-var Acct = new AccountManager(Config.System.AccountDir, Config.System.GlobalSalt);
+var Acct = new AccountManager("", Config.System.GlobalSalt);
 
 // Configure Express.
 app.configure(function() {
@@ -35,7 +35,21 @@ app.configure(function() {
 
 bukkit.CreateServer();
 bukkit.on("srv:user-connect", function (data) {
-	bukkit.Broadcast(data.name + " has connected to the server! Welcome, " + data.name + "!");
+	if (Acct.Exists(data.name)) {
+		bukkit.Broadcast("Welcome back, " + data.name + "!!");
+	} else {
+		bukkit.Broadcast(data.name + " has connected to the server! Welcome, " + data.name + "!");
+		var upw = hash.createPassword(6, "abcdefghijklmnopqrstuvwxyz0123456789");
+		Acct.CreateAccount(data.name, upw, function(err, username) {
+			if (err)
+				util.Debug("Error creating account for: " + username);
+			
+			bukkit.Tell(data.name, "Visit http://www.senney.net:8080/ and log in with the following...");
+			bukkit.Tell(data.name, "U/N: " + data.name);
+			bukkit.Tell(data.name, "P/W: " + upw);
+		});
+	}
+	
 });
 
 // The root page.
@@ -73,7 +87,8 @@ app.get('/Panel', function(req, res) {
 		
 	res.render('Panel.jade', {
 		logContents: bukkit.GetLog(),
-		stats: getServerInfo()
+		stats: getServerInfo(),
+		admin: Acct.Admin(req.session.user)
 	});
 });
 

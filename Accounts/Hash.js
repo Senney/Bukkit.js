@@ -54,7 +54,7 @@ exports.createPassword = function(length, charset) {
 		length = this.DEFAULT_PASS_LENGTH;
 	
 	if (!charset)
-		charset = DEFAULT_CHARSET;
+		charset = this.DEFAULT_CHARSET;
 		
 	var pass = "";
 	var bytes = crypto.randomBytes(length);

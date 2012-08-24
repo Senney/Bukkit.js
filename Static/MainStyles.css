@@ -75,6 +75,7 @@ div#box, div#loginBox, div#statsBox {
 	display: inline-block;
 
 	margin: 0px auto;	
+	margin-top: 20px;
 	background: #C9E3FF;
 	border: 1px solid #0571FF;
 	padding: 15px;

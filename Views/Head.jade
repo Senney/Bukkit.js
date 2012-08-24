@@ -13,16 +13,19 @@ head
 		};
 		
 		window.StopUpdate = function() {
+			console.log("Stop");
 			pu.stop();
 		}
 		
 		window.StartUpdate = function() {
+			console.log("start");
 			if (pu) {
 				pu.start();
 			} else {
 				pu = new Ajax.PeriodicalUpdater('logArea', '/Log', {
 					method: 'get', frequency: 5, decay: 0,
 					onSuccess: function() {
+						// FIXME: This should not be based on time. Rewrite to not use periodical updater?
 						setTimeout(window.ScrollDown, 30);
 					}
 				});

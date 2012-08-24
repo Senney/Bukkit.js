@@ -8,6 +8,8 @@ this.Bukkit = {};
 this.Bukkit._eventHandlers = {};
 this.Bukkit._users = {};
 
+const LOG_FILTER_REG = /\[CONSOLE->.*\]/i;
+
 this.Bukkit.CreateServer = function(path, host, port) {
 	path = path ? path : Config.Bukkit.ExecutablePath;
 	host = host ? host : Config.Network.Host;
@@ -43,7 +45,13 @@ this.Bukkit.CreateServer = function(path, host, port) {
 		// http://www.commandlinefu.com/commands/view/3584/remove-color-codes-special-characters-with-sed
 		// "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"
 		var re = /\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]/g
-		srv._log = srv._log + String(data).replace(re, "");
+		
+		data = String(data);
+		// Strip all whispers, as they are private information.
+		
+		var m = data.match(LOG_FILTER_REG)
+		if (!m)
+			srv._log = srv._log + data.replace(re, "");
 		
 		var match = undefined;
 		
@@ -115,6 +123,11 @@ this.Bukkit.StopServer = function() {
 this.Bukkit.Broadcast = function(message) {
 	this.emit("cmd:say");
 	this.SendCommand("say " + message);
+}
+
+this.Bukkit.Tell = function(player, message) {
+	this.emit("cmd:whisper");
+	this.SendCommand("tell " + player + " " + message);
 }
 
 this.Bukkit.SendCommand = function(command) {
